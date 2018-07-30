@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{9D829C07-5B17-49ED-BE66-934E7524C6C9}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Carroll2018TicTacToe/Form1.cs">
+    <Files>
+      <File FileName="Carroll2018TicTacToe/Form1.cs" Line="179" Column="38" />
+      <File FileName="Carroll2018TicTacToe/Form1.Designer.cs" Line="197" Column="34" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Carroll2018TicTacToe PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>
