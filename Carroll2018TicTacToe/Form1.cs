@@ -45,7 +45,7 @@ namespace Carroll2018TicTacToe
         //    }
         //}
 
-        // 
+        //
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
@@ -80,7 +80,7 @@ namespace Carroll2018TicTacToe
         bool draw = false;
         Random rnd = new Random();
         Button[] highlightList = new Button[3];
-        
+
 
         private void designButtons()
         {
@@ -97,7 +97,7 @@ namespace Carroll2018TicTacToe
             }
         }
 
-        private void resetBoard() 
+        private void resetBoard()
 
         {
             turn = "X";
@@ -134,7 +134,7 @@ namespace Carroll2018TicTacToe
         private void buttonClick(object sender, EventArgs e)
         {
 
-            statusBox.Text = "It's " + turn + "'s turn.";
+           
 
             if (gameFinished)
             {
@@ -149,8 +149,8 @@ namespace Carroll2018TicTacToe
             if (sentButton.Text == "")
             {
                 // set button contents to turn
-                
 
+                statusBox.Text = "It's " + turn + "'s turn.";
                 if (turn == "X")
                 { turn = "O"; }
                 else if (turn == "O")
@@ -194,7 +194,7 @@ namespace Carroll2018TicTacToe
 
                 if (turn == "O" && aiEnabled && !gameFinished)
                 {
-                    dumbAI();
+                    smartAI();
                 }
             }
 
@@ -205,12 +205,19 @@ namespace Carroll2018TicTacToe
             // Cast the 'sender' as a button
             Button sentButton = (Button)sender;
 
+            onePlayer.BackColor = Color.White;
+            twoPlayer.BackColor = Color.White;
+            sentButton.BackColor = Color.LightGreen;
+
             if (sentButton.Text == "1P")
             {
                 aiEnabled = true;
+                statusBox.Text = "Play!";
             } else
             {
                 aiEnabled = false;
+                statusBox.Text = "P1's turn.";
+
             }
 
             resetBoard();
@@ -230,12 +237,67 @@ namespace Carroll2018TicTacToe
             Button cb = bList[i];
             if (cb.Text == "")
             {
-                cb.PerformClick();
+                click(cb);
                 return;
             } else
             {
                 dumbAI();
             }
+        }
+
+        private void smartAI()
+        {
+          Button[] bList = new Button[] { button1, button2, button3, button4, button5, button6, button7, button8, button9 };
+          Button[][] bLines = new Button[][] { new Button[] { button1, button2, button3}, new Button[] { button4, button5, button6}, new Button[] { button7, button8, button9}, new Button[] { button1, button4, button7}, new Button[] { button2, button5, button8}, new Button[] { button3, button6, button9}, new Button[] { button1, button5, button9}, new Button[] { button3, button5, button7}};
+
+          // Check for any 2-in-a-rows (from us, then them)
+          foreach (string piece in new string[] {"X", "O"}) {
+                foreach (Button[] bLine in bLines) {
+
+                    List<Button> occupiedList = new List<Button>();
+                    foreach (Button b in bLine) {
+                        if (b.Text == piece) {
+                            occupiedList.Add(b);
+                        }
+                    }
+
+                    List<Button> emptyList = new List<Button>();
+                    foreach (Button b in bLine.Except(occupiedList.ToArray())) {
+                        emptyList.Add(b);
+
+                    }
+
+                    if (emptyList.Count == 1) {
+                        string gen1 = occupiedList[0].Text + occupiedList[1].Text;
+                        string gen2 = occupiedList[1].Text + occupiedList[0].Text;
+
+                        if (!(gen1 == "XO" || gen2 == "XO")) {
+                            if (emptyList[0].Text == "")
+                            {
+                                click(emptyList[0]);
+                                return;
+                                //MessageBox.Show("Completed line, " + emptyList[0].Tag);
+                            }
+
+                       
+                    } }
+            }
+          }
+
+          Button[] bPreferred = new Button[] { button5, button1, button9, button7, button4, button3, button2, button6, button8 };
+          foreach (Button b in bPreferred) {
+            if (b.Text == "") {
+              click(b);
+                    //MessageBox.Show("Picked preferred, "+b.Tag);
+                    return;
+            }
+          }
+
+        }
+
+        private void click(Button b)
+        {
+            b.PerformClick();
         }
 
         private bool checkWin(string piece)
